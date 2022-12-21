@@ -25,7 +25,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $username = trim($_POST["username"]);
     }
     
-    // Check if password is empty
+
     if(empty(trim($_POST["password"]))){
         $password_err = "ŞİFRE ADI BOŞ BIRAKILAMAZ.";
     } else{
@@ -71,7 +71,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         }
                     }
                 } else{
-                    // Username doesn't exist, display a generic error message
+
                     $login_err = "Kullanıcı adı veya şifre yanlış.";
                 }
             } else{
@@ -83,7 +83,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     }
     
-    // Close connection
     $mysqli->close();
 }
 ?>

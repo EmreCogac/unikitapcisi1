@@ -39,7 +39,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 echo "Bir şeyler yanlış gitti tekrar deneyin";
             }
 
-            // Close statement
+ 
             $stmt->close();
         }
     }
