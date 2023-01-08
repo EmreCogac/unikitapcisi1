@@ -13,39 +13,17 @@ require_once "config.php";
 if($_SERVER["REQUEST_METHOD"] == "POST"){
  
  
-     $kitapadi = trim($_POST["kitapadi"]);
-     $fiyati = trim($_POST["fiyati"]);
-     $bilgi = trim($_POST["bilgi"]);
+     $adi = trim($_POST["kitapadi"]);
 
-    
-
-
-    
-    // bilgileri sorgıladığım yer
+     $id= $_SESSION["id"];
 
         // sql sorgum 
-        $stmt =$mysqli->prepare("INSERT INTO `books`(`id`, `bookname`, `bookprice`, `bookinfo`) VALUES (?,?,?,?)");
+    $sql =$mysqli->prepare("UPDATE users SET username= $adi WHERE id= $id");
         
     
-            $stmt -> bind_param ("ssss",$id1,$kitapadi1,$fiyat1,$bilgi1);
+    $sql->execute();
             
-        
-
-        
-                    
-                            // şifre doğrulama
-                          
-                            
-                            // verileri aktarıyorum sessiona
-                            $id= $_SESSION["id"];
-                            $id1 = $id;
-                            $kitapadi1 =$kitapadi;
-                            $fiyat1 = $fiyati;
-                            $bilgi1 = $bilgi;
-            
-                       
-    $stmt->execute();
-    $stmt->close();    
+  
     $mysqli->close();
 }
 ?>
@@ -78,22 +56,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">
-                <label>kitap adı</label>
+                <label>adı degis</label>
                 <input type="text" name="kitapadi" class="form-control">
                 <span class="invalid-feedback"></span>
             </div>    
             <div class="form-group">
-                <label>kitap fiyatı</label>
-                <input type="text" name="fiyati" class="form-control">
-                <span class="invalid-feedback"></span>
-            </div>
-            <div class="form-group">
-                <label>kitap özellikleri</label>
-                <input type="text" name="bilgi" class="form-control">
-                <span class="invalid-feedback"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="EKLE">
+                <input type="submit" class="btn btn-primary" value="degistir">
             </div>
             <div class="form-group">
             <a href="profile.php"> geri dön </a>

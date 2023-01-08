@@ -53,9 +53,10 @@ require_once "config.php";
     <h1>Kitaplarım</h1>
     <?php
     
+    $id_param = $_SESSION["id"];
 
 
-    $sqlBooks1 = "SELECT* FROM books WHERE id=".$_SESSION["id"];
+    $sqlBooks1 = "SELECT * FROM books WHERE id=$id_param";
 
     $cikti = $mysqli->query($sqlBooks1);
 
@@ -76,18 +77,28 @@ require_once "config.php";
                             echo '<img class="img-fluid" src="" alt="kitapresmi" />';
                             if($satir["bookprice"]== NULL)
                             {
-                                if($satir["exchange"] == 1)
-                                {
+                               
                                     echo '<p class="text-wraped text-center">değişme isteğinde bulun</p>';
-                                }else{
-                                    echo '<p class="text-wraped text-center">Hediye isteğinde bulun</p>';
-                                }
+                              
                             }
                             else{
                                 echo '<p class="text-wraped text-center">'.$satir["bookprice"].' TL</p>';
                             } 
-                          
+                            echo"<form action=".htmlspecialchars($_SERVER["PHP_SELF"])." method='post'>";
+                            echo "<div class='form-group'>";
+                            echo "<input type='submit' class='btn btn-primary' name='button' value='sil'>";
+                            echo "</div>";
+                             if(array_key_exists('button',$_POST)){
+                              require_once "config.php";
+                              $sql = "DELETE FROM `books` WHERE bookid=".$satir["bookid"];
+                              if($mysqli->query($sql))
+                                {echo $mysqli->affected_rows."kitap silindi";
+                                header("location: profile.php");}
+                                else
+                                 echo"bir şeyler yanlış gitti";
+                             }
                             echo '</div>';
+                            echo "</form>";
                         }
                     }
                     ?>
@@ -100,7 +111,9 @@ require_once "config.php";
     <div style="margin: 5%;"></div>
     <p>
        
-        <a href="logout.php" class="btn btn-danger ml-3">Hesabınızdan çıkış yapın </a>
+        <a href="logout.php" class="btn btn-danger ml-3">Hesabınızdan çıkış yapın</a>
+        <a href="create-post.php" class="btn btn-danger ml-3">pst oluştur</a>
+        <a href="rename.php" class="btn btn-danger ml-3">ad degistir</a>
     </p>
 </body>
 </html>
